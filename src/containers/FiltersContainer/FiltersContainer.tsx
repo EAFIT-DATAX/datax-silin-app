@@ -7,6 +7,24 @@ import IdentificationInput from '../../components/IdentificationInput';
 import { FiltersContainerProps } from './FiltersContainerTypes';
 
 const FiltersContainer: React.FC<FiltersContainerProps> = ({
+    entityActive,
+    identificationActive,
+    nameActive,
+    economicDestinationActive,
+    yearActive,
+    meterActive,
+    energyCompanyActive,
+    stratumActive,
+
+    entityOnDisabledClick,
+    identificationOnDisabledClick,
+    nameOnDisabledClick,
+    economicDestinationOnDisabledClick,
+    yearOnDisabledClick,
+    meterOnDisabledClick,
+    energyCompanyOnDisabledClick,
+    stratumOnDisabledClick,
+
     entityValue,
     setEntityValue,
     entityOptions,
@@ -44,6 +62,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onChange={(value) => setEntityValue(value as string)}
                         placeholder='Seleccione la entidad'
                         options={entityOptions}
+                        onDisabledClick={entityOnDisabledClick}
+                        disabled={!entityActive}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
@@ -54,6 +74,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onMainChange={(value) => setIdentificationValue(value)}
                         onVerificationChange={(value) => setVerificationDigitValue(value)}
                         placeholder='Digite la identificación'
+                        disabled={!identificationActive}
+                        onDisabledClick={identificationOnDisabledClick}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
@@ -63,6 +85,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onChange={(value) => setNameValue(value as string)}
                         label='Nombre / Razón Social'
                         placeholder='Digite el nombre'
+                        disabled={!nameActive}
+                        onDisabledClick={nameOnDisabledClick}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
@@ -73,6 +97,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onChange={(value) => setEconomicDestinationValue(value as string[])}
                         placeholder='Seleccione el destino económico'
                         options={economicDestinationOptions}
+                        disabled={!economicDestinationActive}
+                        onDisabledClick={economicDestinationOnDisabledClick}
                     />
                 </Grid>
                 {/* Second filter row */}
@@ -84,6 +110,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onChange={(value) => setYearValue(value as string[])}
                         placeholder='Seleccione el año'
                         options={yearOptions}
+                        disabled={!yearActive}
+                        onDisabledClick={yearOnDisabledClick}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
@@ -93,6 +121,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         value={meterValue}
                         onChange={(value) => setMeterValue(value as string)}
                         placeholder='Digite el medidor'
+                        disabled={!meterActive}
+                        onDisabledClick={meterOnDisabledClick}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
@@ -103,6 +133,8 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onChange={(value) => setEnergyCompanyValue(value as string[])}
                         placeholder='Seleccione la empresa'
                         options={energyCompanyOptions}
+                        disabled={!energyCompanyActive}
+                        onDisabledClick={energyCompanyOnDisabledClick}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
@@ -113,9 +145,10 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                         onChange={(value) => setStratumValue(value as string[])}
                         placeholder='Seleccione el estrato'
                         options={stratumOptions}
+                        disabled={!stratumActive}
+                        onDisabledClick={stratumOnDisabledClick}
                     />
                 </Grid>
-
             </Grid>
         </>
     );

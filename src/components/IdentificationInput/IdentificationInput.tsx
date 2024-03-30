@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyledCheckbox, StyledTextField } from './IdentificationInputStyles';
 import { Typography } from '@mui/material';
 import { IdentificationInputProps } from './IdentificationInputTypes.d';
 
-const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabled, placeholder, mainValue, verificationValue, onMainChange, onVerificationChange }) => {
-    const [inputDisabled, setInputDisabled] = useState<boolean>(disabled === undefined ? true : disabled);
+const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabled, placeholder, mainValue, verificationValue, onMainChange, onVerificationChange, onDisabledClick }) => {
 
     const handleMainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value.replace(/[^0-9]/g, '');
@@ -22,16 +21,15 @@ const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabl
     };
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputDisabled(!event.target.checked);
+        onDisabledClick(event.target.checked);
     };
 
     return (
         <div>
             <div>
                 <StyledCheckbox
-                    checked={!inputDisabled}
+                    checked={!disabled}
                     onChange={handleCheckboxChange}
-                    disabled={disabled}
                 />
                 <Typography variant="caption">
                     {label}
@@ -45,7 +43,7 @@ const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabl
                     label={placeholder}
                     variant="outlined"
                     type="number"
-                    disabled={inputDisabled}
+                    disabled={disabled}
                     inputProps={{ maxLength: 30 }}
                     style={{ marginRight: 5 }}
                 />
@@ -58,7 +56,7 @@ const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabl
                     size="small"
                     variant="outlined"
                     type="number"
-                    disabled={inputDisabled}
+                    disabled={disabled}
                     inputProps={{ maxLength: 1 }}
                     style={{ marginLeft: 5, width: 70 }}
                 />

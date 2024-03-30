@@ -2,6 +2,24 @@ import { Option } from "../../components/SelectableInput/SelectableInputTypes";
 
 
 export interface FiltersContainerProps {
+    entityActive: boolean;
+    identificationActive: boolean;
+    nameActive: boolean;
+    economicDestinationActive: boolean;
+    yearActive: boolean;
+    meterActive: boolean;
+    energyCompanyActive: boolean;
+    stratumActive: boolean;
+
+    entityOnDisabledClick: (newValue: boolean) => void;
+    identificationOnDisabledClick: (newValue: boolean) => void;
+    nameOnDisabledClick: (newValue: boolean) => void;
+    economicDestinationOnDisabledClick: (newValue: boolean) => void;
+    yearOnDisabledClick: (newValue: boolean) => void;
+    meterOnDisabledClick: (newValue: boolean) => void;
+    energyCompanyOnDisabledClick: (newValue: boolean) => void;
+    stratumOnDisabledClick: (newValue: boolean) => void;
+
     entityValue: string;
     setEntityValue: (newValue: string) => void;
     entityOptions?: Option[] = [];

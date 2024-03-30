@@ -5,6 +5,15 @@ import FiltersContainer from '../../containers/FiltersContainer';
 
 const SearchData: React.FC = () => {
     // Filter states
+    const [entityActive, setEntityActive] = useState<boolean>(true);
+    const [identificationActive, setIdentificationActive] = useState<boolean>(false);
+    const [nameActive, setNameActive] = useState<boolean>(false);
+    const [economicDestinationActive, setEconomicDestinationActive] = useState<boolean>(false);
+    const [yearActive, setYearActive] = useState<boolean>(false);
+    const [meterActive, setMeterActive] = useState<boolean>(false);
+    const [energyCompanyActive, setEnergyCompanyActive] = useState<boolean>(false);
+    const [stratumActive, setStratumActive] = useState<boolean>(false);
+
     const [entityValue, setEntityValue] = useState<string>("");
     const [identificationValue, setIdentificationValue] = useState<string>("");
     const [verificationDigitValue, setVerificationDigitValue] = useState<string>("");
@@ -18,6 +27,24 @@ const SearchData: React.FC = () => {
     return (
         <>
             <FiltersContainer
+                entityActive={entityActive}
+                identificationActive={identificationActive}
+                nameActive={nameActive}
+                economicDestinationActive={economicDestinationActive}
+                yearActive={yearActive}
+                meterActive={meterActive}
+                energyCompanyActive={energyCompanyActive}
+                stratumActive={stratumActive}
+
+                entityOnDisabledClick={setEntityActive}
+                identificationOnDisabledClick={setIdentificationActive}
+                nameOnDisabledClick={setNameActive}
+                economicDestinationOnDisabledClick={setEconomicDestinationActive}
+                yearOnDisabledClick={setYearActive}
+                meterOnDisabledClick={setMeterActive}
+                energyCompanyOnDisabledClick={setEnergyCompanyActive}
+                stratumOnDisabledClick={setStratumActive}
+
                 entityValue={entityValue}
                 setEntityValue={setEntityValue}
                 entityOptions={[ { label: "G-Valle", value: "G-Valle" }, { label: "A-Palmira", value: "A-Palmira" } ]}

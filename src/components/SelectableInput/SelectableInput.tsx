@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MenuItem, InputLabel, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { StyledSelect, StyledChip, StyledCheckbox, StyledFormControl, StyledTextField } from './SelectableInputStyles';
 import { SelectableInputProps, Option } from './SelectableInputTypes.d';
 
-const SelectableInput: React.FC<SelectableInputProps> = ({ type, options = [], label, disabled, placeholder, value, onChange }) => {
-    const [inputDisabled, setInputDisabled] = useState<boolean>(disabled === undefined ? true : disabled);
+const SelectableInput: React.FC<SelectableInputProps> = ({ type, options = [], label, disabled, placeholder, value, onChange, onDisabledClick }) => {
 
     const handleInputChange = (event: SelectChangeEvent<unknown>, child: React.ReactNode) => {
         onChange(event.target.value as string | number | string[]);
@@ -21,25 +20,24 @@ const SelectableInput: React.FC<SelectableInputProps> = ({ type, options = [], l
 
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputDisabled(!event.target.checked);
+        onDisabledClick(event.target.checked);
     };
 
     return (
         <div>
             <div>
                 <StyledCheckbox
-                    checked={!inputDisabled}
+                    checked={!disabled}
                     onChange={handleCheckboxChange}
-                    disabled={disabled}
                 />
                 <Typography variant="caption">
                     {label}
                 </Typography>
             </div>
-            {type === 'text' && <StyledTextField value={value} onChange={handleTextChange} size="small" label={placeholder} variant="outlined" fullWidth disabled={inputDisabled} inputProps={{maxLength: 50}}/>}
-            {type === 'number' && <StyledTextField value={value} onChange={handleTextChange} size="small" label={placeholder} variant="outlined" fullWidth type="number" disabled={inputDisabled} inputProps={{maxLength: 30}} />}
+            {type === 'text' && <StyledTextField value={value} onChange={handleTextChange} size="small" label={placeholder} variant="outlined" fullWidth disabled={disabled} inputProps={{maxLength: 50}}/>}
+            {type === 'number' && <StyledTextField value={value} onChange={handleTextChange} size="small" label={placeholder} variant="outlined" fullWidth type="number" disabled={disabled} inputProps={{maxLength: 30}} />}
             {type === 'select' && (
-                <StyledFormControl variant="outlined" fullWidth disabled={inputDisabled}>
+                <StyledFormControl variant="outlined" fullWidth disabled={disabled}>
                     <InputLabel size="small">{placeholder}</InputLabel>
                     <StyledSelect size="small" value={value} onChange={handleInputChange}>
                         {options.map((option: Option) => (
@@ -51,7 +49,7 @@ const SelectableInput: React.FC<SelectableInputProps> = ({ type, options = [], l
                 </StyledFormControl>
             )}
             {type === 'multi-select' && (
-                <StyledFormControl variant="outlined" fullWidth disabled={inputDisabled}>
+                <StyledFormControl variant="outlined" fullWidth disabled={disabled}>
                     <InputLabel size="small">{placeholder}</InputLabel>
                     <StyledSelect size="small" multiple value={value as string[]} onChange={handleInputChange} renderValue={(selected) => (
                         <div>
