@@ -52,7 +52,7 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
 
     return (
         <>
-            <Grid container spacing={3} style={{ paddingLeft: 50, paddingRight: 50 }}>
+            <Grid container spacing={3} style={{ paddingLeft: 40, paddingRight: 50 }}>
                 {/* First filter row */}
                 <Grid item md={3} sm={6} xs={12}>
                     <SelectableInput

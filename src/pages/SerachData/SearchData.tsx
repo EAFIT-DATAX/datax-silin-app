@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import { Grid } from '@mui/material';
 
 import FiltersContainer from '../../containers/FiltersContainer';
+import QueryContainer from '../../containers/QueryContainer';
 
 const SearchData: React.FC = () => {
     // Filter states
@@ -69,6 +70,7 @@ const SearchData: React.FC = () => {
                 setStratumValue={setStratumValue}
                 stratumOptions={[]}
             />
+            <QueryContainer />
         </>
     )
 }
