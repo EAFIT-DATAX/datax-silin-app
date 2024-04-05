@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import FiltersContainer from '../../containers/FiltersContainer';
 import QueryContainer from '../../containers/QueryContainer';
 
-import DynamicTable from '../../components/DynamicTable';
+import ResultsContainer from '../../containers/ResultsContainer';
 
 
 const SearchData: React.FC = () => {
@@ -74,25 +74,7 @@ const SearchData: React.FC = () => {
                 stratumOptions={[]}
             />
             <QueryContainer />
-            <DynamicTable data={[
-                    {
-                        "0": "Dummy", "1": "Dummy", "2": "Data Dummy", "3": "Dummy", "4": "Dummy", "5": "Data Dummy",
-                        "6": "Dummy", "7": "Dummy", "8": "Data Dummy", "9": "Dummy", "10": "Dummy", "11": "Data Dummy",
-                        "12": "Dummy", "13": "Dummy", "14": "Data Dummy", "15": "Dummy", "16": "Dummy", "17": "Data Dummy",
-                        doc_type: "FT01", entity: "G-Valle", "power_company": "EPM" },
-                    {
-                        "1": "Dummy"
-                    },
-                    {
-                        "3": "Dummy", "4": "Dummy", "5": "Data Dummy"
-                    },
-                    {},
-                    {},
-                    {},
-                    {},
-                    {},
-                ]}
-            />
+            <ResultsContainer isSearching={false}  />
         </>
     )
 }
