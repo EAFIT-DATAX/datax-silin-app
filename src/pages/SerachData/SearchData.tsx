@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { Grid } from '@mui/material';
 
 import FiltersContainer from '../../containers/FiltersContainer';
@@ -10,7 +10,7 @@ import { DocumentTypes } from '../../containers/QueryContainer/QueryContainerTyp
 const SearchData: React.FC = () => {
     // Filter states
     const [entityActive, setEntityActive] = useState<boolean>(true);
-    const [identificationActive, setIdentificationActive] = useState<boolean>(false);
+    const [identificationActive, setIdentificationActive] = useState<boolean>(true);
     const [nameActive, setNameActive] = useState<boolean>(false);
     const [economicDestinationActive, setEconomicDestinationActive] = useState<boolean>(false);
     const [yearActive, setYearActive] = useState<boolean>(false);
@@ -30,9 +30,51 @@ const SearchData: React.FC = () => {
 
     // Search Type states
     const [docType, setDocType] = useState<DocumentTypes>("FT01");
-    const [paginationCount, setPaginationCount] = useState<number>(0);
+    const [paginationCount, setPaginationCount] = useState<number>(500);
     const [paginationPage, setPaginationPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+
+    // Results states
+    const [results, setResults] = useState<any[]>([]);
+    const [isSearching, setIsSearching] = useState<boolean>(false);
+    const [freeQuery, setFreeQuery] = useState<boolean>(false);
+
+
+    // Functions
+    const onClickSearch = () => console.log("Search");
+    const onClickDownload = () => console.log("Download");
+
+    useEffect(() => {
+        setEntityActive(true);
+        setIdentificationActive(true);
+        switch (docType) {
+            case "FT03":
+                setNameActive(false);
+                setEconomicDestinationActive(false);
+                setYearActive(false);
+                setMeterActive(false);
+                setEnergyCompanyActive(true);
+                setStratumActive(false);
+                break;
+            case "FT05":
+                setNameActive(true);
+                setEconomicDestinationActive(false);
+                setYearActive(true);
+                setMeterActive(false);
+                setEnergyCompanyActive(true);
+                setStratumActive(false);
+                break;
+            default:
+                setNameActive(true);
+                setEconomicDestinationActive(true);
+                setYearActive(true);
+                setMeterActive(true);
+                setEnergyCompanyActive(true);
+                setStratumActive(true);
+                break;
+        }
+    }, [docType]);
+
 
     return (
         <>
@@ -87,8 +129,14 @@ const SearchData: React.FC = () => {
                 setPaginationPage={setPaginationPage}
                 rowsPerPage={rowsPerPage}
                 setRowsPerPage={setRowsPerPage}
+                onClickSearch={onClickSearch}
+                onClickDownload={onClickDownload}
             />
-            <ResultsContainer isSearching={false}  />
+            <ResultsContainer
+                isSearching={isSearching}
+                results={results}
+                setFreeQueryValue={setFreeQuery}
+            />
         </>
     )
 }

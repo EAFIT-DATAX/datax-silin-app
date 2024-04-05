@@ -5,14 +5,17 @@ import DynamicTable from "../../components/DynamicTable";
 import LoadingLayout from "../../layouts/LoadingLayout";
 import { IResultsContainerProps } from "./ResultsContainerTypes";
 
-const ResultsContainer: React.FC<IResultsContainerProps> = ({ results, isSearching }) => {
+const ResultsContainer: React.FC<IResultsContainerProps> = ({ results, isSearching, setFreeQueryValue }) => {
     const [tabValue, setTabValue] = useState<number>(0);
 
-    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => setTabValue(newValue);
+    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setTabValue(newValue)
+        setFreeQueryValue(tabs[newValue].freeQuery)
+    }
 
     const tabs = [
-        { free_query: false, label: "Coincidencia exacta" },
-        { free_query: true, label: "Otras coincidencias" },
+        { freeQuery: false, label: "Coincidencia exacta" },
+        { freeQuery: true, label: "Otras coincidencias" },
     ]
 
     return (
