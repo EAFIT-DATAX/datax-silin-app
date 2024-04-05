@@ -7,7 +7,7 @@ const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabl
 
     const handleMainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value.replace(/[^0-9]/g, '');
-        if (parseInt(newValue) >= 0)
+        if (newValue === '' || parseInt(newValue) >= 0)
             onMainChange(newValue);
     };
 
@@ -15,7 +15,7 @@ const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabl
         const newValue = event.target.value.replace(/[^0-9]/g, '');
         const intValue = parseInt(newValue);
 
-        if (intValue >= 0 && intValue <= 9) {
+        if (newValue === '' || (intValue >= 0 && intValue <= 9)) {
             onVerificationChange(newValue);
         }
     };

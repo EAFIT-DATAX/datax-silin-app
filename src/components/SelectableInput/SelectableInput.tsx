@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem, InputLabel, Typography } from '@mui/material';
+import { MenuItem, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { StyledSelect, StyledChip, StyledCheckbox, StyledFormControl, StyledTextField, StyledInputLabel } from './SelectableInputStyles';
 import { SelectableInputProps, Option } from './SelectableInputTypes.d';
@@ -38,7 +38,7 @@ const SelectableInput: React.FC<SelectableInputProps> = ({ type, options = [], l
             {type === 'number' && <StyledTextField value={value} onChange={handleTextChange} size="small" label={placeholder} variant="outlined" fullWidth type="number" disabled={disabled} inputProps={{maxLength: 30}} />}
             {type === 'select' && (
                 <StyledFormControl variant="outlined" fullWidth disabled={disabled}>
-                    <StyledInputLabel size="small" style={{ background: "#ffff" }} >{placeholder}</StyledInputLabel>
+                    <StyledInputLabel size="small" style={{ background: disabled ? "#d4d4d4" : "#ffffff" }} >{placeholder}</StyledInputLabel>
                     <StyledSelect size="small" value={value} onChange={handleInputChange}>
                         {options.map((option: Option) => (
                             <MenuItem key={option.value} value={option.value}>
@@ -50,7 +50,7 @@ const SelectableInput: React.FC<SelectableInputProps> = ({ type, options = [], l
             )}
             {type === 'multi-select' && (
                 <StyledFormControl variant="outlined" fullWidth disabled={disabled}>
-                    <StyledInputLabel size="small" style={{ background: "#ffff" }}>{placeholder}</StyledInputLabel>
+                    <StyledInputLabel size="small" style={{ background: disabled ? "#d4d4d4" : "#ffffff" }}>{placeholder}</StyledInputLabel>
                     <StyledSelect size="small" multiple value={value as string[]} onChange={handleInputChange} renderValue={(selected) => (
                         <div>
                             {(selected as string[]).map((value) => (

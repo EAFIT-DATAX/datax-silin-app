@@ -4,11 +4,14 @@ import { DynamicTableProps, EnhancedTableHeadProps } from "./DynamicTableTypes";
 import { StyledTableCell, StyledTableRow, StyledTableContainer, StyledColumnHeader } from "./DynamicTableStyles";
 
 const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = ({ order, orderBy, onRequestSort, maxColumns }) => {
+    const numericalRows = Array(maxColumns)
+    const width = 100/(numericalRows.length + 1)
+
     return (
         <TableHead>
             <StyledTableRow>
-                {[...Array(maxColumns).keys()].map(num => (
-                    <StyledColumnHeader key={num}>
+                {[...numericalRows.keys()].map(num => (
+                    <StyledColumnHeader key={num} style={{ width: `${width}%`}}>
                         <TableSortLabel
                             active={orderBy === num.toString()}
                             direction={orderBy === num.toString() ? order : 'asc'}
@@ -18,7 +21,7 @@ const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = ({ order, orderBy, o
                         </TableSortLabel>
                     </StyledColumnHeader>
                 ))}
-                <StyledColumnHeader>
+                <StyledColumnHeader style={{ width: `${width}%`}}>
                     <TableSortLabel
                         active={orderBy === 'power_company'}
                         direction={orderBy === 'power_company' ? order : 'asc'}
@@ -57,28 +60,30 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
         : [...data].sort((a, b) => (b[orderBy] || '').localeCompare(a[orderBy] || ''));
 
     return (
-        <Grid container style={{ marginTop: 30, marginBottom: 30 }}>
-            <StyledTableContainer style={{ width: "100%", marginLeft: 50, marginRight: 50 }} >
-                <EnhancedTableHead
-                    order={order}
-                    orderBy={orderBy}
-                    onRequestSort={handleRequestSort}
-                    maxColumns={maxColumns}
-                />
-                <TableBody>
-                    {sortedData.map((row, rowIndex) => (
-                        <StyledTableRow key={rowIndex}>
-                            {[...Array(maxColumns).keys()].map(num => (
-                                <StyledTableCell key={num}>
-                                    {row[num.toString()] || "-"}
-                                </StyledTableCell>
-                            ))}
-                            <StyledTableCell>{row.power_company}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </StyledTableContainer>
-        </Grid>
+        <>
+            <Grid container style={{ marginTop: 30, marginBottom: 30 }}>
+                <StyledTableContainer style={{ marginLeft: 50, marginRight: 50 }} >
+                    <EnhancedTableHead
+                        order={order}
+                        orderBy={orderBy}
+                        onRequestSort={handleRequestSort}
+                        maxColumns={maxColumns}
+                    />
+                    <TableBody>
+                        {sortedData.map((row, rowIndex) => (
+                            <StyledTableRow key={rowIndex}>
+                                {[...Array(maxColumns).keys()].map(num => (
+                                    <StyledTableCell key={num}>
+                                        {row[num.toString()] || "-"}
+                                    </StyledTableCell>
+                                ))}
+                                <StyledTableCell>{row.power_company}</StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </StyledTableContainer>
+            </Grid>
+        </>
     );
 };
 

@@ -10,6 +10,6 @@ export interface SelectableInputProps {
     disabled?: boolean;
     onDisabledClick: (newValue: boolean) => void;
     placeholder?: string;
-    value: string | number | string[];
+    value?: string | number | string[];
     onChange: (newValues: string | number | string[]) => void;
 }

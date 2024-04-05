@@ -43,6 +43,4 @@ export const StyledTextField = styled(TextField)({
     },
 });
 
-export const StyledInputLabel = styled(InputLabel)({
-    backgroundColor : "#ffffff",
-});
+export const StyledInputLabel = styled(InputLabel)({});

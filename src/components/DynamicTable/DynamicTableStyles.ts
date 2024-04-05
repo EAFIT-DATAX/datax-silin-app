@@ -1,7 +1,9 @@
 import { styled } from '@mui/material/styles';
 import { TableContainer, TableCell, TableRow } from '@mui/material';
 
-export const StyledTableContainer = styled(TableContainer)({});
+export const StyledTableContainer = styled(TableContainer)({
+    width: '100%',
+});
 
 export const StyledTableCell = styled(TableCell)({});
 
