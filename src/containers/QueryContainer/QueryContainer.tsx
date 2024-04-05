@@ -10,7 +10,9 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
     paginationPage,
     setPaginationPage,
     rowsPerPage,
-    setRowsPerPage
+    setRowsPerPage,
+    onClickSearch,
+    onClickDownload
 }) => {
 
     const [tabValue, setTabValue] = useState<number>(0);
@@ -26,6 +28,15 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
     const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTabValue(newValue)
         setSelectedDocType(tabs[newValue].docType)
+    }
+
+    const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPaginationPage(0);
+    }
+
+    const handlePaginationChange = (event: any, value: number) => {
+        setPaginationPage(value);
     }
 
     return (
@@ -51,17 +62,31 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
                     <StyledTablePagination
                         count={paginationCount}
                         page={paginationPage}
-                        onPageChange={() => console.log("Page changed")}
+                        onPageChange={handlePaginationChange}
                         rowsPerPage={rowsPerPage}
-                        onRowsPerPageChange={() => console.log("Rows per page changed")}
+                        onRowsPerPageChange={handleRowsPerPageChange}
                         rowsPerPageOptions={[5, 10, 25, 50]}
                         labelRowsPerPage="Filas por página"
                         labelDisplayedRows={({ from, to, count }) => `${from} - ${to} de ${count}`}
                     />
                 </Grid>
                 <Grid item md={3} xs={12}>
-                    <StyledButton variant="contained" color="primary" style={{ marginRight: 15 }}>Consulta</StyledButton>
-                    <StyledButton variant="contained" color="primary" disabled>Descargar</StyledButton>
+                    <StyledButton
+                        variant="contained"
+                        color="primary"
+                        style={{ marginRight: 15 }}
+                        onClick={onClickSearch}
+                    >
+                        Consulta
+                    </StyledButton>
+                    <StyledButton
+                        variant="contained"
+                        color="primary"
+                        disabled
+                        onClick={onClickDownload}
+                    >
+                        Descargar
+                    </StyledButton>
                 </Grid>
             </Grid>
         </>

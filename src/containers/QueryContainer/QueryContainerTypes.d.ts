@@ -12,6 +12,9 @@ export interface IQueryContainerProps {
     rowsPerPage: number
     setRowsPerPage: (nRows: number) => void
 
+    onClickSearch: () => void;
+    onClickDownload: () => void;
+
 }
 
 
