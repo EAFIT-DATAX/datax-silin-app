@@ -12,6 +12,9 @@ export const StyledSelect = styled(Select)({
             backgroundColor: 'rgba(41, 196, 152, 0.2)',
         },
     },
+    '& .Mui-disabled': {
+        backgroundColor: '#d4d4d4',
+    },
 });
 
 export const StyledChip = styled(Chip)({
@@ -35,4 +38,7 @@ export const StyledTextField = styled(TextField)({
     width: '92%',
     display: 'flex',
     marginLeft: 'auto',
+    '& .Mui-disabled': {
+        backgroundColor: '#d4d4d4',
+    },
 });

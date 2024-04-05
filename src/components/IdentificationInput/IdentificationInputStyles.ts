@@ -13,4 +13,7 @@ export const StyledTextField = styled(TextField)({
     width: '90%',
     display: 'flex',
     marginLeft: 35,
+    '& .Mui-disabled': {
+        backgroundColor: '#d4d4d4',
+    },
 });
