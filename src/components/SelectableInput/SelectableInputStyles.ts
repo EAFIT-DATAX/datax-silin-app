@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Select, Chip, Checkbox, FormControl, TextField } from '@mui/material';
+import { Select, Chip, Checkbox, FormControl, TextField, InputLabel } from '@mui/material';
 
 export const StyledSelect = styled(Select)({
     '& .MuiSelect-root': {
@@ -41,4 +41,8 @@ export const StyledTextField = styled(TextField)({
     '& .Mui-disabled': {
         backgroundColor: '#d4d4d4',
     },
+});
+
+export const StyledInputLabel = styled(InputLabel)({
+    backgroundColor : "#ffffff",
 });
