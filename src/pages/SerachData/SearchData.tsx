@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 
 import FiltersContainer from '../../containers/FiltersContainer';
 import QueryContainer from '../../containers/QueryContainer';
-
 import ResultsContainer from '../../containers/ResultsContainer';
 
+import { DocumentTypes } from '../../containers/QueryContainer/QueryContainerTypes'
 
 const SearchData: React.FC = () => {
     // Filter states
@@ -27,6 +27,12 @@ const SearchData: React.FC = () => {
     const [meterValue, setMeterValue] = useState<string>("");
     const [energyCompanyValue, setEnergyCompanyValue] = useState<string[]>([]);
     const [stratumValue, setStratumValue] = useState<string[]>([]);
+
+    // Search Type states
+    const [docType, setDocType] = useState<DocumentTypes>("FT01");
+    const [paginationCount, setPaginationCount] = useState<number>(0);
+    const [paginationPage, setPaginationPage] = useState<number>(0);
+    const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
     return (
         <>
@@ -73,7 +79,15 @@ const SearchData: React.FC = () => {
                 setStratumValue={setStratumValue}
                 stratumOptions={[]}
             />
-            <QueryContainer />
+            <QueryContainer
+                setSelectedDocType={setDocType}
+                paginationCount={paginationCount}
+                setPaginationCount={setPaginationCount}
+                paginationPage={paginationPage}
+                setPaginationPage={setPaginationPage}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+            />
             <ResultsContainer isSearching={false}  />
         </>
     )

@@ -1,22 +1,32 @@
 import React, { useState } from "react";
-
 import { Grid, Tabs, Tab } from '@mui/material';
 import { StyledButton, StyledTablePagination } from "./QueryContainerStyles";
+import { IQueryTypeTabs, IQueryContainerProps } from './QueryContainerTypes'
 
-
-const QueryContainer = () => {
+const QueryContainer: React.FC<IQueryContainerProps> = ({
+    setSelectedDocType,
+    paginationCount,
+    setPaginationCount,
+    paginationPage,
+    setPaginationPage,
+    rowsPerPage,
+    setRowsPerPage
+}) => {
 
     const [tabValue, setTabValue] = useState<number>(0);
 
-    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => setTabValue(newValue);
-
-    const tabs = [
-        { doc_type: "FT01", label: "Consumo" },
-        { doc_type: "FT03", label: "Recaudo" },
-        { doc_type: "FT06", label: "Excluidos" },
-        { doc_type: "FT05", label: "Cartera" },
-        { doc_type: "FT02", label: "Operadores de Red", disable: true },
+    const tabs: IQueryTypeTabs[] = [
+        { docType: "FT01", label: "Consumo" },
+        { docType: "FT03", label: "Recaudo" },
+        { docType: "FT06", label: "Excluidos" },
+        { docType: "FT05", label: "Cartera" },
+        { docType: "FT02", label: "Operadores de Red", disable: true },
     ]
+
+    const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setTabValue(newValue)
+        setSelectedDocType(tabs[newValue].docType)
+    }
 
     return (
         <>
@@ -32,18 +42,19 @@ const QueryContainer = () => {
                     >
                         {tabs.map((tab, index) => {
                             return (
-                                <Tab key={index} label={`${tab.label} (${tab.doc_type})`} disabled={tab.disable} />
+                                <Tab key={index} label={`${tab.label} (${tab.docType})`} disabled={tab.disable} />
                             )
                         })}
                     </Tabs>
                 </Grid>
                 <Grid item md={4} xs={12}>
                     <StyledTablePagination
-                        count={100}
-                        page={0}
-                        onPageChange={() => { }}
-                        rowsPerPage={10}
-                        onRowsPerPageChange={() => { }}
+                        count={paginationCount}
+                        page={paginationPage}
+                        onPageChange={() => console.log("Page changed")}
+                        rowsPerPage={rowsPerPage}
+                        onRowsPerPageChange={() => console.log("Rows per page changed")}
+                        rowsPerPageOptions={[5, 10, 25, 50]}
                         labelRowsPerPage="Filas por página"
                         labelDisplayedRows={({ from, to, count }) => `${from} - ${to} de ${count}`}
                     />
