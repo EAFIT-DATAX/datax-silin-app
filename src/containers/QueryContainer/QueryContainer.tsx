@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Grid, Tabs, Tab } from '@mui/material';
 import { StyledButton, StyledTablePagination } from "./QueryContainerStyles";
 import { IQueryTypeTabs, IQueryContainerProps } from './QueryContainerTypes'
+import { RiseLoader } from "react-spinners";
 
 const QueryContainer: React.FC<IQueryContainerProps> = ({
     setSelectedDocType,
@@ -12,10 +13,13 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
     rowsPerPage,
     setRowsPerPage,
     onClickSearch,
-    onClickDownload
+    onClickDownload,
+    searchButtonDisabled,
+    downloadButtonDisabled
 }) => {
 
     const [tabValue, setTabValue] = useState<number>(0);
+    const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
     const tabs: IQueryTypeTabs[] = [
         { docType: "FT01", label: "Consumo" },
@@ -31,12 +35,18 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
     }
 
     const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
         setPaginationPage(0);
+        setRowsPerPage(parseInt(event.target.value, 10));
     }
 
     const handlePaginationChange = (event: any, value: number) => {
         setPaginationPage(value);
+    }
+
+    const handleDownload = async () => {
+        setIsDownloading(true);
+        await onClickDownload();
+        setIsDownloading(false);
     }
 
     return (
@@ -76,16 +86,17 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
                         color="primary"
                         style={{ marginRight: 15 }}
                         onClick={onClickSearch}
+                        disabled={searchButtonDisabled}
                     >
                         Consulta
                     </StyledButton>
                     <StyledButton
                         variant="contained"
                         color="primary"
-                        disabled
-                        onClick={onClickDownload}
+                        disabled={downloadButtonDisabled}
+                        onClick={handleDownload}
                     >
-                        Descargar
+                        {isDownloading ? <RiseLoader style={{ paddingTop: 1 }} color="#ffffff" size={8} /> : "Descargar"}
                     </StyledButton>
                 </Grid>
             </Grid>

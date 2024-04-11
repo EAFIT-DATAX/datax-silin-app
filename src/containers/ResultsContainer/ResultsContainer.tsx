@@ -5,7 +5,7 @@ import DynamicTable from "../../components/DynamicTable";
 import LoadingLayout from "../../layouts/LoadingLayout";
 import { IResultsContainerProps } from "./ResultsContainerTypes";
 
-const ResultsContainer: React.FC<IResultsContainerProps> = ({ results, isSearching, setFreeQueryValue }) => {
+const ResultsContainer: React.FC<IResultsContainerProps> = ({ results, isSearching, setFreeQueryValue, columns }) => {
     const [tabValue, setTabValue] = useState<number>(0);
 
     const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -40,7 +40,7 @@ const ResultsContainer: React.FC<IResultsContainerProps> = ({ results, isSearchi
                 <Grid item xs={12}>
                     <LoadingLayout isLoading={isSearching} >
                         {results && results.length
-                            ? <DynamicTable data={results}/>
+                            ? <DynamicTable data={results} columns={columns}/>
                             : <p style={{ textAlign: "center" }}>
                                 No se encontraron resultados 😢
                             </p>

@@ -3,21 +3,21 @@ import { TableBody, TableHead, Grid, TableSortLabel } from "@mui/material";
 import { DynamicTableProps, EnhancedTableHeadProps } from "./DynamicTableTypes";
 import { StyledTableCell, StyledTableRow, StyledTableContainer, StyledColumnHeader } from "./DynamicTableStyles";
 
-const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = ({ order, orderBy, onRequestSort, maxColumns }) => {
-    const numericalRows = Array(maxColumns)
-    const width = 100/(numericalRows.length + 1)
+const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = ({ order, orderBy, onRequestSort, columns }) => {
+    // const numericalRows = Array(maxColumns)
+    const width = 100/(Object.keys(columns).length + 1)
 
     return (
         <TableHead>
             <StyledTableRow>
-                {[...numericalRows.keys()].map(num => (
-                    <StyledColumnHeader key={num} style={{ width: `${width}%`}}>
+                {Object.entries(columns).map(([num, columnName]) => (
+                    <StyledColumnHeader key={num} style={{ width: `${width}%` }}>
                         <TableSortLabel
-                            active={orderBy === num.toString()}
-                            direction={orderBy === num.toString() ? order : 'asc'}
-                            onClick={() => onRequestSort(num.toString())}
+                            active={orderBy === num}
+                            direction={orderBy === num ? order : 'asc'}
+                            onClick={() => onRequestSort(num)}
                         >
-                            {num}
+                            {columnName}
                         </TableSortLabel>
                     </StyledColumnHeader>
                 ))}
@@ -36,7 +36,7 @@ const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = ({ order, orderBy, o
 }
 
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
+const DynamicTable: React.FC<DynamicTableProps> = ({ data, columns }) => {
 
     let maxColumns = 0;
     data.forEach(item => {
@@ -67,17 +67,17 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleRequestSort}
-                        maxColumns={maxColumns}
+                        columns={columns}
                     />
                     <TableBody>
                         {sortedData.map((row, rowIndex) => (
                             <StyledTableRow key={rowIndex}>
-                                {[...Array(maxColumns).keys()].map(num => (
+                                {Object.keys(columns).map(num => (
                                     <StyledTableCell key={num}>
-                                        {row[num.toString()] || "-"}
+                                        {row[num] !== undefined ? row[num] : "-"}
                                     </StyledTableCell>
                                 ))}
-                                <StyledTableCell>{row.power_company}</StyledTableCell>
+                                <StyledTableCell>{row.power_company || "-"}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

@@ -91,14 +91,13 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
                     <SelectableInput
-                        type='multi-select'
-                        label='Destino Económico'
-                        value={economicDestinationValue}
-                        onChange={(value) => setEconomicDestinationValue(value as string[])}
-                        placeholder='Seleccione el destino económico'
-                        options={economicDestinationOptions}
-                        disabled={!economicDestinationActive}
-                        onDisabledClick={economicDestinationOnDisabledClick}
+                        type='text'
+                        label='Medidor'
+                        value={meterValue}
+                        onChange={(value) => setMeterValue(value as string)}
+                        placeholder='Digite el medidor'
+                        disabled={!meterActive}
+                        onDisabledClick={meterOnDisabledClick}
                     />
                 </Grid>
                 {/* Second filter row */}
@@ -116,13 +115,14 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
                     <SelectableInput
-                        type='text'
-                        label='Medidor'
-                        value={meterValue}
-                        onChange={(value) => setMeterValue(value as string)}
-                        placeholder='Digite el medidor'
-                        disabled={!meterActive}
-                        onDisabledClick={meterOnDisabledClick}
+                        type='multi-select'
+                        label='Destino Económico'
+                        value={economicDestinationValue}
+                        onChange={(value) => setEconomicDestinationValue(value as string[])}
+                        placeholder='Seleccione el destino económico'
+                        options={economicDestinationOptions}
+                        disabled={!economicDestinationActive}
+                        onDisabledClick={economicDestinationOnDisabledClick}
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
