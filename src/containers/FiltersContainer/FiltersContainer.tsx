@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 
+import Option from '../../components/Option';
 import SelectableInput from '../../components/SelectableInput';
 import IdentificationInput from '../../components/IdentificationInput';
 import { FiltersContainerProps } from './FiltersContainerTypes';
@@ -48,6 +49,9 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
     stratumValue,
     setStratumValue,
     stratumOptions,
+
+    removeStopWordsChecked,
+    setRemoveStopWordsChecked
 }) => {
 
     return (
@@ -79,15 +83,25 @@ const FiltersContainer: React.FC<FiltersContainerProps> = ({
                     />
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
-                    <SelectableInput
-                        type='text'
-                        value={nameValue}
-                        onChange={(value) => setNameValue(value as string)}
-                        label='Nombre / Razón Social'
-                        placeholder='Digite el nombre'
-                        disabled={!nameActive}
-                        onDisabledClick={nameOnDisabledClick}
-                    />
+                    <Grid item xs={12}>
+                        <SelectableInput
+                            type='text'
+                            value={nameValue}
+                            onChange={(value) => setNameValue(value as string)}
+                            label='Nombre / Razón Social'
+                            placeholder='Digite el nombre'
+                            disabled={!nameActive}
+                            onDisabledClick={nameOnDisabledClick}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Option
+                            label='Quitar Stopwords'
+                            tooltip='Excluye palabras comunes ("de", "en", "y") para afinar los resultados de búsqueda'
+                            checked={removeStopWordsChecked}
+                            setChecked={setRemoveStopWordsChecked}
+                        />
+                    </Grid>
                 </Grid>
                 <Grid item md={3} sm={6} xs={12}>
                     <SelectableInput

@@ -43,4 +43,8 @@ export interface FiltersContainerProps {
     stratumValue: string[];
     setStratumValue: (newValue: string[]) => void;
     stratumOptions?: Option[] = [];
+
+    removeStopWordsChecked: boolean;
+    setRemoveStopWordsChecked: (newValue: boolean) => void;
+
 }

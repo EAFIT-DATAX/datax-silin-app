@@ -63,6 +63,7 @@ const SearchData: React.FC = () => {
   const [energyCompanies, setEnergyCompanies] = useState<Option[]>([]);
   const [stratums, setStratums] = useState<Option[]>([]);
 
+  const [removeStopWordsChecked, setRemoveStopWordsChecked] = useState<boolean>(false);
 
   // Functions
 
@@ -118,31 +119,32 @@ const SearchData: React.FC = () => {
         doc_type: docType,
         entity: entityValue,
       },
-      scroll_time: "15m"
+      scroll_time: "15m",
+      remove_stopwords: removeStopWordsChecked
     }
 
-    if (nameValue !== "")
+    if (nameActive && nameValue !== "")
       body.query_data["name"] = nameValue;
 
-    if (identificationValue !== "")
+    if (identificationActive && identificationValue !== "")
       body.query_data["identification"] = {
         identification: identificationValue,
         verification_number: verificationDigitValue
       }
 
-    if (economicDestinationValue.length !== 0)
+    if (economicDestinationActive && economicDestinationValue.length !== 0)
       body.query_data["economic_destination"] = economicDestinationValue;
 
-    if (yearValue.length !== 0)
+    if (yearActive && yearValue.length !== 0)
       body.query_data["year"] = yearValue;
 
-    if (meterValue !== "")
+    if (meterActive && meterValue !== "")
       body.query_data["meter"] = meterValue;
 
-    if (energyCompanyValue.length !== 0)
+    if (energyCompanyActive && energyCompanyValue.length !== 0)
       body.query_data["power_company"] = energyCompanyValue;
 
-    if (stratumValue.length !== 0)
+    if (stratumActive && stratumValue.length !== 0)
       body.query_data["stratum"] = stratumValue;
 
     return body
@@ -150,6 +152,8 @@ const SearchData: React.FC = () => {
 
   const handleSearch = async () => {
     setIsSearching(true);
+    setPaginationPage(0)
+    setPaginationCount(0)
     const body = makeQueryRequestBody();
 
     console.log(body);
@@ -357,6 +361,8 @@ const SearchData: React.FC = () => {
           stratumValue={stratumValue}
           setStratumValue={setStratumValue}
           stratumOptions={stratums}
+          removeStopWordsChecked={removeStopWordsChecked}
+          setRemoveStopWordsChecked={setRemoveStopWordsChecked}
         />
         <QueryContainer
           setSelectedDocType={setDocType}
