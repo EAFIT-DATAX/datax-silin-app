@@ -27,7 +27,16 @@ const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = ({ order, orderBy, o
                         direction={orderBy === 'power_company' ? order : 'asc'}
                         onClick={() => onRequestSort('power_company')}
                     >
-                        power_company
+                        Empresa de energía
+                    </TableSortLabel>
+                </StyledColumnHeader>
+                <StyledColumnHeader style={{ width: `${width}%`}}>
+                    <TableSortLabel
+                        active={orderBy === 'origin'}
+                        direction={orderBy === 'origin' ? order : 'asc'}
+                        onClick={() => onRequestSort('origin')}
+                    >
+                        Origen
                     </TableSortLabel>
                 </StyledColumnHeader>
             </StyledTableRow>
@@ -78,6 +87,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data, columns }) => {
                                     </StyledTableCell>
                                 ))}
                                 <StyledTableCell>{row.power_company || "-"}</StyledTableCell>
+                                <StyledTableCell>{row.origin || "-"}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

@@ -6,7 +6,16 @@ import { IdentificationInputProps } from './IdentificationInputTypes.d';
 const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabled, placeholder, mainValue, verificationValue, onMainChange, onVerificationChange, onDisabledClick }) => {
 
     const handleMainChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value.replace(/[^0-9]/g, '');
+        let newValue = event.target.value;
+        if (event.target.value.includes('-')) {
+            const valueParts = event.target.value.split('-');
+            const newVerificationDigitValue = valueParts[1];
+            newValue = valueParts[0];
+            if (newVerificationDigitValue === '' || parseInt(newVerificationDigitValue) >= 0)
+                onVerificationChange(newVerificationDigitValue);
+        }
+
+        newValue = newValue.replace(/[^0-9]/g, '');
         if (newValue === '' || parseInt(newValue) >= 0)
             onMainChange(newValue);
     };
@@ -42,7 +51,7 @@ const IdentificationInput: React.FC<IdentificationInputProps> = ({ label, disabl
                     size="small"
                     label={placeholder}
                     variant="outlined"
-                    type="number"
+                    type="text"
                     disabled={disabled}
                     inputProps={{ maxLength: 30 }}
                     style={{ marginRight: 5 }}
