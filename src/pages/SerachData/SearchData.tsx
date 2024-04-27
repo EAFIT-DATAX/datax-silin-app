@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 
+import MainLayout from '../../layouts/MainLayout';
+
 import FiltersContainer from '../../containers/FiltersContainer';
 import QueryContainer from '../../containers/QueryContainer';
 import ResultsContainer from '../../containers/ResultsContainer';
 import LoadingLayout from '../../layouts/LoadingLayout';
-
 
 import { DocumentTypes } from '../../containers/QueryContainer/QueryContainerTypes'
 import { Option } from '../../components/SelectableInput/SelectableInputTypes';
@@ -178,9 +179,9 @@ const SearchData: React.FC = () => {
     setIsSearching(false);
   }
 
-  const handleDownload = async () => {
+  const handleDownload = async (download_filetype: string) => {
     const body = makeQueryRequestBody();
-    body["filetype"] = "CSV"
+    body["filetype"] = download_filetype
     const download_request_response = await downloadDataByQuery(body);
     const { hash } = download_request_response;
 
@@ -245,7 +246,7 @@ const SearchData: React.FC = () => {
   }
 
   const onClickSearch = () => handleSearch();
-  const onClickDownload = () => handleDownload();
+  const onClickDownload = (download_filetype: string) => handleDownload(download_filetype);
 
   useEffect(() => {
     if (results.length)
@@ -307,84 +308,86 @@ const SearchData: React.FC = () => {
   }, [entityValue, docType]);
 
   return (
-    <LoadingLayout isLoading={isLoading} size={20}>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={openSnackbar}
-        autoHideDuration={5000}
-        onClose={() => setOpenSnackBar(false)}
-      >
-        <Alert onClose={() => setOpenSnackBar(false)} severity={snackBarType} sx={{ width: '100%' }}>
-          {snackBarMessage}
-        </Alert>
-      </Snackbar>
-      <>
-        <FiltersContainer
-          entityActive={entityActive}
-          identificationActive={identificationActive}
-          nameActive={nameActive}
-          economicDestinationActive={economicDestinationActive}
-          yearActive={yearActive}
-          meterActive={meterActive}
-          energyCompanyActive={energyCompanyActive}
-          stratumActive={stratumActive}
+    <MainLayout>
+      <LoadingLayout isLoading={isLoading} size={20}>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={openSnackbar}
+          autoHideDuration={5000}
+          onClose={() => setOpenSnackBar(false)}
+        >
+          <Alert onClose={() => setOpenSnackBar(false)} severity={snackBarType} sx={{ width: '100%' }}>
+            {snackBarMessage}
+          </Alert>
+        </Snackbar>
+        <>
+          <FiltersContainer
+            entityActive={entityActive}
+            identificationActive={identificationActive}
+            nameActive={nameActive}
+            economicDestinationActive={economicDestinationActive}
+            yearActive={yearActive}
+            meterActive={meterActive}
+            energyCompanyActive={energyCompanyActive}
+            stratumActive={stratumActive}
 
-          entityOnDisabledClick={setEntityActive}
-          identificationOnDisabledClick={setIdentificationActive}
-          nameOnDisabledClick={setNameActive}
-          economicDestinationOnDisabledClick={setEconomicDestinationActive}
-          yearOnDisabledClick={setYearActive}
-          meterOnDisabledClick={setMeterActive}
-          energyCompanyOnDisabledClick={setEnergyCompanyActive}
-          stratumOnDisabledClick={setStratumActive}
+            entityOnDisabledClick={setEntityActive}
+            identificationOnDisabledClick={setIdentificationActive}
+            nameOnDisabledClick={setNameActive}
+            economicDestinationOnDisabledClick={setEconomicDestinationActive}
+            yearOnDisabledClick={setYearActive}
+            meterOnDisabledClick={setMeterActive}
+            energyCompanyOnDisabledClick={setEnergyCompanyActive}
+            stratumOnDisabledClick={setStratumActive}
 
-          entityValue={entityValue}
-          setEntityValue={setEntityValue}
-          entityOptions={entities}
-          identificationValue={identificationValue}
-          setIdentificationValue={setIdentificationValue}
-          verificationDigitValue={verificationDigitValue}
-          setVerificationDigitValue={setVerificationDigitValue}
-          nameValue={nameValue}
-          setNameValue={setNameValue}
-          economicDestinationValue={economicDestinationValue}
-          setEconomicDestinationValue={setEconomicDestinationValue}
-          economicDestinationOptions={economicDestinations}
-          yearValue={yearValue}
-          setYearValue={setYearValue}
-          yearOptions={years}
-          meterValue={meterValue}
-          setMeterValue={setMeterValue}
-          energyCompanyValue={energyCompanyValue}
-          setEnergyCompanyValue={setEnergyCompanyValue}
-          energyCompanyOptions={energyCompanies}
-          stratumValue={stratumValue}
-          setStratumValue={setStratumValue}
-          stratumOptions={stratums}
-          removeStopWordsChecked={removeStopWordsChecked}
-          setRemoveStopWordsChecked={setRemoveStopWordsChecked}
-        />
-        <QueryContainer
-          setSelectedDocType={setDocType}
-          paginationCount={paginationCount}
-          setPaginationCount={setPaginationCount}
-          paginationPage={paginationPage}
-          setPaginationPage={handlePagination}
-          rowsPerPage={rowsPerPage}
-          setRowsPerPage={handleRowsPerPageChange}
-          onClickSearch={onClickSearch}
-          onClickDownload={onClickDownload}
-          searchButtonDisabled={searchButtonDisabled}
-          downloadButtonDisabled={downloadButtonDisabled}
-        />
-        <ResultsContainer
-          isSearching={isSearching}
-          results={resultsToShow}
-          setFreeQueryValue={setFreeQuery}
-          columns={columns}
-        />
-      </>
-    </LoadingLayout>
+            entityValue={entityValue}
+            setEntityValue={setEntityValue}
+            entityOptions={entities}
+            identificationValue={identificationValue}
+            setIdentificationValue={setIdentificationValue}
+            verificationDigitValue={verificationDigitValue}
+            setVerificationDigitValue={setVerificationDigitValue}
+            nameValue={nameValue}
+            setNameValue={setNameValue}
+            economicDestinationValue={economicDestinationValue}
+            setEconomicDestinationValue={setEconomicDestinationValue}
+            economicDestinationOptions={economicDestinations}
+            yearValue={yearValue}
+            setYearValue={setYearValue}
+            yearOptions={years}
+            meterValue={meterValue}
+            setMeterValue={setMeterValue}
+            energyCompanyValue={energyCompanyValue}
+            setEnergyCompanyValue={setEnergyCompanyValue}
+            energyCompanyOptions={energyCompanies}
+            stratumValue={stratumValue}
+            setStratumValue={setStratumValue}
+            stratumOptions={stratums}
+            removeStopWordsChecked={removeStopWordsChecked}
+            setRemoveStopWordsChecked={setRemoveStopWordsChecked}
+          />
+          <QueryContainer
+            setSelectedDocType={setDocType}
+            paginationCount={paginationCount}
+            setPaginationCount={setPaginationCount}
+            paginationPage={paginationPage}
+            setPaginationPage={handlePagination}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={handleRowsPerPageChange}
+            onClickSearch={onClickSearch}
+            onClickDownload={onClickDownload}
+            searchButtonDisabled={searchButtonDisabled}
+            downloadButtonDisabled={downloadButtonDisabled}
+          />
+          <ResultsContainer
+            isSearching={isSearching}
+            results={resultsToShow}
+            setFreeQueryValue={setFreeQuery}
+            columns={columns}
+          />
+        </>
+      </LoadingLayout>
+    </MainLayout>
   )
 }
 

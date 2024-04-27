@@ -1,13 +1,16 @@
 import styled from "@mui/material/styles/styled";
 import { Grid, Typography, Button } from "@mui/material";
 
-export const StyledLoginContainerWrapper = styled(Grid)({
+export const StyledLoginContainerWrapper = styled(Grid)(({ theme }) => ({
     backgroundColor: "#ffffff",
     padding: "25px 45px",
     borderRadius: "15px",
     minHeight: "600px",
-    minWidth: "500px",
-})
+
+    [theme.breakpoints.up('sm')]: {
+        minWidth: "500px",
+    }
+}));
 
 const BaseLoginText = styled(Typography)({
     color: "#5c6b7f"

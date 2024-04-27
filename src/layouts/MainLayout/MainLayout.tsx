@@ -16,9 +16,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         navigate('/login');
     }
 
+    if (!localStorage.getItem('access_token') || !localStorage.getItem('id_token')) {
+        window.location.href = '/login';
+    }
+
     return (
         <IdleTimerProvider
-            timeout={1000 * 60 * 15}
+            timeout={1000 * 60 * 60 * 24}
             onIdle={handleLogout}
         >
             <Header
