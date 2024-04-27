@@ -13,11 +13,10 @@ export interface IQueryContainerProps {
     setRowsPerPage: (nRows: number) => void
 
     onClickSearch: () => void;
-    onClickDownload: () => void;
+    onClickDownload: (download_filetype: string) => void;
 
     searchButtonDisabled: boolean
     downloadButtonDisabled: boolean
-
 }
 
 

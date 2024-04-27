@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Tabs, Tab } from '@mui/material';
 import { StyledButton, StyledTablePagination } from "./QueryContainerStyles";
 import { IQueryTypeTabs, IQueryContainerProps } from './QueryContainerTypes'
-import { RiseLoader } from "react-spinners";
+import DownloadButton from "../../components/DownloadButton";
 
 const QueryContainer: React.FC<IQueryContainerProps> = ({
     setSelectedDocType,
@@ -29,6 +29,21 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
         { docType: "FT02", label: "Operadores de Red", disable: true },
     ]
 
+    const downloadOptions = [
+        {
+            label: 'Archivo CSV',
+            action: () => handleDownload("CSV")
+        },
+        {
+            label: 'Archivo TXT',
+            action: () => handleDownload("TXT")
+        },
+        {
+            label: 'Archivo XLSX',
+            action: () => handleDownload("XLSX")
+        }
+    ];
+
     const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTabValue(newValue)
         setSelectedDocType(tabs[newValue].docType)
@@ -43,9 +58,9 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
         setPaginationPage(value);
     }
 
-    const handleDownload = async () => {
+    const handleDownload = async (download_filetype: string) => {
         setIsDownloading(true);
-        await onClickDownload();
+        await onClickDownload(download_filetype);
         setIsDownloading(false);
     }
 
@@ -90,14 +105,12 @@ const QueryContainer: React.FC<IQueryContainerProps> = ({
                     >
                         Consulta
                     </StyledButton>
-                    <StyledButton
-                        variant="contained"
-                        color="primary"
+                    <DownloadButton
                         disabled={downloadButtonDisabled}
-                        onClick={handleDownload}
-                    >
-                        {isDownloading ? <RiseLoader style={{ paddingTop: 1 }} color="#ffffff" size={8} /> : "Descargar"}
-                    </StyledButton>
+                        label="Descargar"
+                        isLoading={isDownloading}
+                        options={downloadOptions}
+                    />
                 </Grid>
             </Grid>
         </>
