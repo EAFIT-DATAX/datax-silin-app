@@ -1,0 +1,4 @@
+include:
+  - project: 'silin-project/cicd/frontend/internal-datax'
+    ref: 'main'
+    file: '.gitlab-ci.yml'
