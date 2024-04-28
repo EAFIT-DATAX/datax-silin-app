@@ -67,6 +67,7 @@ const SearchData: React.FC = () => {
   const [removeStopWordsChecked, setRemoveStopWordsChecked] = useState<boolean>(false);
 
   // Functions
+  // TODO: Remove this comment
 
   const getFilters = async () => {
     setIsLoading(true);
