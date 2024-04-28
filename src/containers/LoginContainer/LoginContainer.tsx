@@ -41,8 +41,7 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ email, password, setEm
     }
 
     if (localStorage.getItem('access_token') && localStorage.getItem('id_token')) {
-        console.log("Already logged in");
-        window.location.href = '/';
+        navigate('/')
     }
 
     const handleLogin = async () => {

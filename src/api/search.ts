@@ -1,20 +1,18 @@
-import axios from "axios";
+import api from "./base";
 
-import { BASE_URL } from "./base";
-
-const URL = `${BASE_URL}/search`;
+const RESOURCE = `/search`;
 
 export const searchDataByQuery = async (body: any) => {
-    const response = await axios.post(`${URL}/`, body);
+    const response = await api.post(`${RESOURCE}/`, body);
     return response.data;
 }
 
 export const downloadDataByQuery = async (body: any) => {
-    const response = await axios.post(`${URL}/download`, body);
+    const response = await api.post(`${RESOURCE}/download`, body);
     return response.data;
 }
 
 export const getDownloadProcess = async (hash: string) => {
-    const response = await axios.get(`${URL}/download/${hash}`);
+    const response = await api.get(`${RESOURCE}/download/${hash}`);
     return response.data;
 }

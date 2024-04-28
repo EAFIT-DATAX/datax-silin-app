@@ -67,7 +67,6 @@ const SearchData: React.FC = () => {
   const [removeStopWordsChecked, setRemoveStopWordsChecked] = useState<boolean>(false);
 
   // Functions
-  // TODO: Remove this comment
 
   const getFilters = async () => {
     setIsLoading(true);
@@ -158,11 +157,8 @@ const SearchData: React.FC = () => {
     setPaginationCount(0)
     const body = makeQueryRequestBody();
 
-    console.log(body);
-
     try {
       const response = await searchDataByQuery(body);
-      console.log(response);
       // validate if response has count key
       if ("count" in response)
         setPaginationCount(response.count);
@@ -215,7 +211,6 @@ const SearchData: React.FC = () => {
     if (results.length < end && results.length < paginationCount) {
       if (scrollId) {
         try{
-          console.log("Hay que consultar")
           // setPaginationPage(page);
           // setResultsToShow(results.slice(start, end));
           setIsSearching(true);
@@ -261,22 +256,25 @@ const SearchData: React.FC = () => {
 
     if (downloadHash !== "") {
       intervalId = setInterval(async () => {
-        const response = await getDownloadProcess(downloadHash);
-        console.log(response);
-        if (response.status === "DONE") {
-          const { url } = response;
-          window.open(url, "_blank");
-          clearInterval(intervalId);
-          setSnackBarMessage("La descarga se ha completado!");
-          setSnackBarType("success");
-          setOpenSnackBar(true);
-          setDownloadHash("");
-        } else if (response.status === "ERROR") {
-          clearInterval(intervalId);
-          setSnackBarMessage("La descarga ha fallado!");
-          setSnackBarType("error");
-          setOpenSnackBar(true);
-          setDownloadHash("");
+        try {
+          const response = await getDownloadProcess(downloadHash);
+          if (response.status === "DONE") {
+            const { url } = response;
+            window.open(url, "_blank");
+            clearInterval(intervalId);
+            setSnackBarMessage("La descarga se ha completado!");
+            setSnackBarType("success");
+            setOpenSnackBar(true);
+            setDownloadHash("");
+          } else if (response.status === "ERROR") {
+            clearInterval(intervalId);
+            setSnackBarMessage("La descarga ha fallado!");
+            setSnackBarType("error");
+            setOpenSnackBar(true);
+            setDownloadHash("");
+          }
+        } catch (error) {
+          console.log(error);
         }
       }, 5000);
     }
