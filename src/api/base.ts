@@ -1,13 +1,33 @@
 import axios from "axios"
 
+interface ApiConfig {
+    baseURL: string
+    "x-api-key": string
+}
+
+interface ApiConfigMap {
+    [env: string]: ApiConfig
+}
+
+const API_CONFIG: ApiConfigMap = {
+    "dev": {
+        "baseURL": "https://yvc3vlvzf2.execute-api.us-east-1.amazonaws.com/dev/datax",
+        "x-api-key": "7Df3RpZt747d6VIVJNOZm7DBb8zeq2Jk53zlxzuo"
+    },
+    "prod": {
+        "baseURL": "https://c1yniuxvzl.execute-api.us-east-1.amazonaws.com/prod/datax",
+        "x-api-key": "SkjfwBTYOL6fELnbrHs5f6zuwOVBnYsc8pJfyHsG"
+    }
+}
+
 
 const api = axios.create({
-    baseURL: "https://yvc3vlvzf2.execute-api.us-east-1.amazonaws.com/dev/datax"
+    baseURL: API_CONFIG[process.env.REACT_APP_DATAX_ENV || 'dev'].baseURL,
 })
 
 api.interceptors.request.use(
     config => {
-        config.headers["x-api-key"] = "7Df3RpZt747d6VIVJNOZm7DBb8zeq2Jk53zlxzuo"
+        config.headers["x-api-key"] = API_CONFIG[process.env.REACT_APP_DATAX_ENV || 'dev']["x-api-key"]
         if (!config.url?.includes('/auth/')){
             config.headers["Authorization"] = `Bearer ${localStorage.getItem('id_token')}`
         }
