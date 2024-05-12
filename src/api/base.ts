@@ -41,29 +41,41 @@ api.interceptors.response.use(
     response => response,
     async error => {
         const originalRequest = error.config
+        console.error(`[ERROR-INTERCEPTOR]`)
         console.error(error)
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true
-            console.error(error)
 
-            try {
-                const tokenResponse = await refreshToken(localStorage.getItem('refresh_token') || '')
-                localStorage.setItem('id_token', tokenResponse.id_token)
-                localStorage.setItem('access_token', tokenResponse.access_token)
-                api.defaults.headers.common['Authorization'] = `Bearer ${tokenResponse.id_token}`
+        let needRefresh = false
 
-                return api(originalRequest)
-            } catch (refreshError) {
-                console.error(`[REFRESH-ERROR] ${refreshError}`)
-                localStorage.removeItem('id_token')
-                localStorage.removeItem('access_token')
-                localStorage.removeItem('refresh_token')
-
-                window.location.href = '/login'
-                return Promise.reject(refreshError)
+        if (!error.response) {
+            if (localStorage.getItem('refresh_token')) {
+                needRefresh = true
+            }
+        } else {
+            if (error.response.status === 401 && !originalRequest._retry) {
+                originalRequest._retry = true
+                console.error(error)
+                needRefresh = true
             }
         }
-        return Promise.reject(error)
+
+        if (!needRefresh) {
+            return Promise.reject(error)
+        }
+
+        try {
+            const tokenResponse = await refreshToken(localStorage.getItem('refresh_token') || '')
+            localStorage.setItem('id_token', tokenResponse.id_token)
+            localStorage.setItem('access_token', tokenResponse.access_token)
+            api.defaults.headers.common['Authorization'] = `Bearer ${tokenResponse.id_token}`
+            return api(originalRequest)
+        } catch (refreshError) {
+            console.error(`[REFRESH-ERROR] ${refreshError}`)
+            localStorage.removeItem('id_token')
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            window.location.href = '/login'
+            return Promise.reject(refreshError)
+        }
     }
 )
 
