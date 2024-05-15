@@ -17,6 +17,10 @@ const API_CONFIG: ApiConfigMap = {
     "prod": {
         "baseURL": "https://c1yniuxvzl.execute-api.us-east-1.amazonaws.com/prod/datax",
         "x-api-key": "SkjfwBTYOL6fELnbrHs5f6zuwOVBnYsc8pJfyHsG"
+    },
+    "local": {
+        "baseURL": "http://localhost:8888/datax",
+        "x-api-key": "XXXX"
     }
 }
 

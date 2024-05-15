@@ -116,7 +116,7 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ email, password, setEm
             <Box display="flex" flexDirection="column" alignItems="center">
                 <img src={Logo} width={250} alt="Silin DataX" />
                 <StyledLoginSubtitle variant="body1">
-                    Explora tus datos con presición, conecta sin limites, escala hacia el futuro.
+                    Explora tus datos con precisión, conecta sin limites, escala hacia el futuro.
                 </StyledLoginSubtitle>
                 <StyledLoginForm>
                     <AuthInput
